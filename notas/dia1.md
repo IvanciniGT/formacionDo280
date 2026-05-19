@@ -552,3 +552,5 @@ IPTABLES? IPTables es solo un comando para dar de alta reglas en NETFLITER.
 Cómo se llama en Kubernetes al proxy reverso? Ingress Controller
 Un ingress es otrra cosa...
 Un ingress es una regla de configuración para nuestro ingress controller.
+
+---
