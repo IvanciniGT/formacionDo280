@@ -55,7 +55,7 @@ VOY A TRATAR LA INFRAESTRUCTURA COMO SI FUERA CÓDIGO:
    v1.0.1 de la infra!
    v1.1.0 de la infra!
    v2.0.0 de la infra!
-- Tener esntornos donde desplegar la infraestructura, para probarla antes de ponerla en producción.
+- Tener entornos donde desplegar la infraestructura, para probarla antes de ponerla en producción.
 - Tengo control del ciclo de vida de la infraestructura.
   - Despliegue
   - Actualización
