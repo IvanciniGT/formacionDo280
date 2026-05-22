@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kibana
+
+spec:
+  host: kibana-proyecto-ivan.apps.rosa.prueba.osqa.p3.openshiftapps.com
+  to:
+    kind: Service
+    name: cluster-es-ivan-eck-kibana-kb-http
+    weight: 100
+  port:
+    targetPort: https
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None

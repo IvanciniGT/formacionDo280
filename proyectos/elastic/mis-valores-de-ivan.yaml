@@ -8,26 +8,11 @@ eck-elasticsearch:
   - name: mis-maestros
     count: 3
     config:
-      node.roles: ["master"]
+      node.roles: ["master","data"]
       node.store.allow_mmap: false
-  - name: mis-nodos-de-datos
-    count: 2
-    config:
-      node.roles: ["data", "ingest"]
-      node.store.allow_mmap: false
-  - name: mis-coordinadores
-    count: 2
-    config:
-      # Nodos coordinadores: sin roles => solo enrutan peticiones
-      node.roles: []
-      node.store.allow_mmap: false
-
-
 
 eck-kibana:
   enabled: true
   elasticsearchRef:
     name: elasticsearch
 
-eck-agent: # y el resto a false (que ya viene en el values por defecto.)
-  enabled: false
