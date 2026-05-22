@@ -543,3 +543,7 @@ Eso lo haremos con otro chart de helm, que se llama ECKStack, y que se basa en l
     Y a tocar lo que necesite... que será mucho!
 
     $ helm install cluster-de-elastic-de-ivan repositorio-charts-de-elastic/eck-stack -n elastic -v mis-valores-de-ivan.yaml
+
+
+
+---

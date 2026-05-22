@@ -1,0 +1,53 @@
+---
+# Source: eck-stack/charts/eck-elasticsearch/templates/elasticsearch.yaml
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+  labels:
+    helm.sh/chart: eck-elasticsearch-0.19.0
+    app.kubernetes.io/name: eck-elasticsearch
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    eck.k8s.elastic.co/license: basic
+spec:
+  version: 9.4.1
+  nodeSets:
+    
+    - config:
+        node.roles:
+        - master
+        node.store.allow_mmap: false
+      count: 3
+      name: mis-maestros
+    - config:
+        node.roles:
+        - data
+        - ingest
+        node.store.allow_mmap: false
+      count: 2
+      name: mis-nodos-de-datos
+    - config:
+        node.roles: []
+        node.store.allow_mmap: false
+      count: 2
+      name: mis-coordinadores
+---
+# Source: eck-stack/charts/eck-kibana/templates/kibana.yaml
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: release-name-eck-kibana
+  labels:
+    helm.sh/chart: eck-kibana-0.19.0
+    app.kubernetes.io/name: eck-kibana
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    eck.k8s.elastic.co/license: basic
+spec:
+  version: 9.4.0
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
