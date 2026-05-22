@@ -49,3 +49,7 @@ spec:
 # Para eso, hay que asociar una política de seguridad (security context constraint) que permita eso al service account nginx-sa
 # Paso 4: Asociar la política de seguridad "anyuid" al service account nginx
 # $ oc adm policy add-scc-to-user anyuid -z nginx-sa -n proyecto-ivan
+#                                 priviledged
+
+# anyuid me permite trabajar con usuario root... pero bloquea el uso de capacidades de Linux... 
+# priviledged, no solo es compatible con usuario root... sino que también permite el uso de capacidades de Linux...

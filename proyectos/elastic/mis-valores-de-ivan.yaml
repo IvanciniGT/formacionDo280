@@ -1,3 +1,8 @@
+# $ oc create sa elasticsearch -n proyecto-ivan
+# $ oc adm policy add-scc-to-user anyuid -z elasticsearch -n proyecto-ivan
+# $ oc adm policy add-scc-to-user privileged -z elasticsearch -n proyecto-ivan
+
+
 ---
 eck-elasticsearch:
   enabled: true
@@ -9,7 +14,45 @@ eck-elasticsearch:
     count: 3
     config:
       node.roles: ["master","data"]
-      node.store.allow_mmap: false
+
+    podTemplate:
+      spec:
+
+        #containers:
+        #- name: elasticsearch
+
+        #  resources:
+        #    limits:
+        #      memory: 2Gi
+        #    requests:
+        #      memory: 2Gi
+        serviceAccountName: elasticsearch
+        initContainers:
+        - command:
+          - sh
+          - "-c"
+          - sysctl -w vm.max_map_count=262144
+          name: sysctl
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsNonRoot: false
+
+
+#helm upgrade cluster-es-ivan repositorio-charts-de-elastic/eck-stack -f proyectos/elastic/mis-valores-de-ivan.yaml -n proyecto-ivan
+
+# Esto es un desastre!!!!!!!!!!
+# Ver notas del día 5
+
+
+
+
+
+
+
+
+
+
 
 eck-kibana:
   enabled: true

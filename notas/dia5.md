@@ -26,3 +26,25 @@ Delegan ese trabajo a un objeto intermedio de kubernetes llamado replicaset.
 El deployment le dice al replicaset asociado -> Queremos tener X pods.
 
 Y el replicaset es el que genera los pods.
+
+---
+
+# Comentarios sobre el init container en el proyecto de elasticsearch
+
+Lo que hemos hecho con el init container es un DESASTRE DE PROPORCIONES EPICAS!
+NO DE BROMA NADA PARECIDO EN UN ENTORNO DE PRODUCCION!
+Los de Elastic me dan eso y se quedan más agusto que la PETRI!!!!
+Y funciona (con apañitos...)!
+
+Quién rellena el archivo con el que hemos hecho el despliegue? En el que viene el initcontainer?
+El tio que quiera desplegar un cluster.
+Y para poder rellenarlo y que funcione necesita taner un ServiceAccount en su PROYECTO con permisos de ANYUID y PRIVILEGED.
+Ese lo hemos creado nosotros (SUPERADMINISTRADORES SUPERSUPREMOS!)
+
+Esa persona, lo mismo que ha creado un initContainer con el comando: sysctl vm.max_map_count=262144, también podría haber creado un initContainer con el comando: rm -rf /
+
+Solución?
+1. Ni de broma initContainers y serviceAccounts con permisos ANYUID y PRIVILEGED en un entorno de producción.
+2. Me creo un namespace para mi JEFESUPREMO--con un sa con permisos ANYUID y PRIVILEGED
+3. Ahí despliego un DaemonSet que ejecute el comando sysctl vm.max_map_count=262144 en cada nodo del cluste con mi sa con permisos ANYUID y PRIVILEGED
+4. Y esto se lo doy ya hecho.. EL NO PUEDDE NI DEBE PODER TOCARLO, SOLO USARLO
